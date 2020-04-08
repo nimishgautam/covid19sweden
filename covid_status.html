@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>COVID in Sweden</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css">
+	<script src="./vendor/chartjs/Chart.min.js"></script>
+	<script src="./vendor/chartjs/chartjs-plugin-annotation.min.js"></script>
+	<script src="./vendor/d3js/d3.v4.js"></script>
+	<script src="./vendor/d3js/d3-scale-chromatic.v1.min.js"></script>
+	<script src="./vendor/d3js/d3-geo-projection.v2.min.js"></script>
+	<script src="./vendor/d3js/topojson.min.js"></script>
+	<script src="./vendor/jquery/jquery-3.4.1.min.js"></script>
+
+	<script src="./data/js/covid-data.js"></script>
+	
+</head>
+
+<body>
+	<div id="subtitle"></div>
+	  <div id="helptext">
+    <p class="helphead"><b>What's this?</b></p>
+    <p> This chart shows the deaths from COVID-19 in Sweden over time.</p>
+	<p> The map shows the various counties of Sweden. The color shows how many deaths have occured in that county <i>relative to the county's population</i>. This way, counties with low populations but high death rates will stand out. Hovering over the county will show you the actual number of deaths, as well as the population of the county.</p>
+	<p> The chart shows the number of deaths, ICU cases, and cumulative values for these over time.</p>
+	<p> For comparison, there are dashed lines on the chart showing the total annual Flu deaths for Sweden in 2019, as well as the total number of Flu-related intensive care cases for 2019.</p>
+	<p> Clicking on the name of a dataset will either show or hide that dataset in the chart</p>
+    <p class="helphead"><b>Why not show case numbers as well?</b></p>
+    <p> Sweden isn't testing thoroughly, so the case numbers can show trends that aren't actually happening. The death numbers, on the other hand, are kept track of more meticulously, and therefore give a more accurate view of the situation.</p>
+    <p class="helphead"><b>More info</b></p>
+    <p>Github link <a href="https://github.com/nimishgautam/covid19sweden">here</a></p>
+    <p>For questions/comments please email nimishg [at_sign] gmail · com</p>
+    <p>&nbsp;<button id="closehelp">Close</button></p>
+  </div>
+	<div class="main_container">
+		<div class="sv_map_holder">
+			<svg id="sv_map"></svg>
+		</div>
+		<div class="main_chart_holder">
+			<canvas id="canvas"></canvas>
+		</div>
+	</div>
+</body>
+<footer>
+	<a href="#" id="infobtn">More info</a>	Sources: <a href="https://www.dataportal.se/sv/datasets?p=1&q=folkh%C3%A4lsomyndigheten&s=1&f=">FHM data</a> <a href="https://www.folkhalsomyndigheten.se/publicerat-material/publikationsarkiv/i/influenza-in-sweden/?pub=63511">Flu Report</a>
+</footer>
+<script>
+$('#helptext').hide();
+var toggleHelp = function(evt){
+  if( $('#helptext').is(":hidden") ){
+    $('#helptext').slideDown("slow");
+  }
+  else{
+    $('#helptext').slideUp("slow");
+  }
+};
+
+$('#infobtn').click(toggleHelp);
+$('#closehelp').click(toggleHelp);
+
+</script>
+<script src="./js/stats_chart_setup.js"></script>
+<script src="./js/d3map_setup.js"></script>
+
+</html>
