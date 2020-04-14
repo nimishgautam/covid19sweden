@@ -32,7 +32,7 @@ d3.queue()
 function ready(error, topo, csvfile){
 
   var colorScale = d3.scaleLinear()
-	.domain([countyMin, countyMax])
+	.domain([0, countyMax])
 	//.range(['#ffd3d3', '#ff0000']);
 	.range(['#eee', '#ff0000']);
 	//.range(['#d0d0f9', '#ff0000']);
