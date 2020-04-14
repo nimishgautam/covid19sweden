@@ -1,7 +1,11 @@
+html {
+    font-family: 'Open Sans', sans-serif;
+}
+
 canvas {
     -moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
+    -webkit-user-select: none;	
+    -ms-user-select: none;
 }
 
 .main_chart_holder {
@@ -49,7 +53,6 @@ footer {
 
 button {
     border-radius: 15px;
-    padding: .5rem;
     margin-right: .2em;
     cursor: pointer;
     transition:.2s;
@@ -67,4 +70,18 @@ button {
 
 #closehelp{
     float: right;
+}
+
+.select_holder{
+    margin: 1rem;
+    font-size: .75rem;
+}
+
+#current_region_select{
+    margin-right: 1rem;
+}
+
+#infobtn{
+    color: white;
+    background-color: darkblue;
 }

@@ -1,5 +1,6 @@
 import sys
 import json
+from generate_json_from_el import add_more_data
 
 #column names to keep
 keep_cols = ['Antal_avlidna',
@@ -35,11 +36,16 @@ def csv_to_JSON(csvfile, droprows=0):
 if __name__ == "__main__":
   csvfile = sys.argv[1]
   # first 29 days arbitrarily dropped since they're low
-  csv_obj = csv_to_JSON(csvfile, 29)
+  csv_obj = csv_to_JSON(csvfile, 31)
   final_json_obj = {}
   # copy only the columns in keep_cols for the final JSON object
   for col in keep_cols:
-    final_json_obj[col] = csv_obj[col]
+    if col == 'Statistikdatum':
+      final_json_obj[col] = csv_obj[col]
+    else:
+      final_json_obj[col] = {}
+      final_json_obj[col]["Sweden (official)"] = csv_obj[col]
+  add_more_data(final_json_obj)
   json_str = json.dumps( final_json_obj )
   # Saves an async call if it's a valid JS file
   js_file = "var covid_data = " + json_str + ";"

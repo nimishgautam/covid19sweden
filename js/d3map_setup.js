@@ -19,7 +19,7 @@ d3.queue()
 	var countyName = d['Region'];
 	var countyVal = +d['Totalt_antal_avlidna'] / +d['Population'];
 	countyValues.set(countyName, countyVal);
-	countyText.set(countyName, d['Totalt_antal_avlidna'] + " (pop:" + d["Population"]+")");
+	countyText.set(countyName, d['Totalt_antal_avlidna'] + " (pop:\xa0" + parseInt(d["Population"]).toLocaleString()+")");
 	  if(countyVal < countyMin){
 		  countyMin = countyVal;
 	  }
@@ -53,25 +53,43 @@ function ready(error, topo, csvfile){
     .attr("d", function(feature){ return path(feature); })
     .attr("data-desc", function(d){ return countyText.get( d.properties.name ); })
     .attr("data-name", function(d){ return d.properties.name; })
-	.attr('fill', function(d){ 
-		return colorScale(countyValues.get( d.properties.name ));
-	})
-	.on("mouseover", function(d){
-      d3.select(this).attr('stroke', 'grey');
+    .attr("data-country", "Sweden")
+    .attr("data-fill",  function(d){ 
+	return colorScale(countyValues.get( d.properties.name ));
+    })
+    .attr('fill', function(d){ 
+	return colorScale(countyValues.get( d.properties.name ));
+    })
+    .on("mouseover", function(d){
+      if( d3.select(this).attr('data-name') != active_region){
+	d3.select(this).attr('stroke', 'grey');
+      }
       var total_people = d3.select(this).attr('data-desc');
       var display_txt = d3.select(this).attr('data-name');
       if(total_people){
-        display_txt += " - " + total_people;
+        display_txt += " : " + total_people;
       }
       $('#subtitle').show();
       $('#subtitle').text(display_txt);
       d3.select('#subtitle')
         .style('left', (d3.event.pageX) + "px")
-        .style('top', (d3.event.pageY - 28) + "px");
+        .style('top', (d3.event.pageY - 40) + "px");
 
     })
     .on("mouseout", function(d){
-      d3.select(this).attr('stroke', 'none');
+      if( d3.select(this).attr('data-name') != active_region){
+	d3.select(this).attr('stroke', 'none');
+      }
       $('#subtitle').hide();
+    })
+    .on("click", function(d){
+      let selected_region = d3.select(this).attr('data-name');
+      if (active_region == selected_region){
+      	active_region = "Sweden (official)";
+      }
+      else{
+      	active_region = selected_region;
+      }
+      chart_update();
     });
 }

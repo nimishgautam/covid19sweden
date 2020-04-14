@@ -1,8 +1,8 @@
-<!doctype html>
 <html>
-
+<meta charset="utf-8">
 <head>
 	<title>COVID in Sweden</title>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./css/main.css">
 	<script src="./vendor/chartjs/Chart.min.js"></script>
 	<script src="./vendor/chartjs/chartjs-plugin-annotation.min.js"></script>
@@ -22,11 +22,15 @@
     <p class="helphead"><b>What's this?</b></p>
     <p> This chart shows the deaths from COVID-19 in Sweden over time.</p>
 	<p> The map shows the various counties of Sweden. The color shows how many deaths have occured in that county <i>relative to the county's population</i>. This way, counties with low populations but high death rates will stand out. Hovering over the county will show you the actual number of deaths, as well as the population of the county.</p>
-	<p> The chart shows the number of deaths, ICU cases, and cumulative values for these over time.</p>
+	<p> Clicking on a region or selecting the region from the dropdown at the bottom will show data for just that region.</p>
+	<p> The chart shows the number of deaths over time, ICU cases, and cumulative values for these over time.</p>
 	<p> For comparison, there are dashed lines on the chart showing the total annual Flu deaths for Sweden in 2019, as well as the total number of Flu-related intensive care cases for 2019.</p>
 	<p> Clicking on the name of a dataset will either show or hide that dataset in the chart</p>
     <p class="helphead"><b>Why not show case numbers as well?</b></p>
     <p> Sweden isn't testing thoroughly, so the case numbers can show trends that aren't actually happening. The death numbers, on the other hand, are kept track of more meticulously, and therefore give a more accurate view of the situation.</p>
+    <p class="helphead"><b>Data discrepancy</b></p>
+    <p> The numbers indicated in Sweden (official) are from <a href="https://www.folkhalsomyndigheten.se/">Folkhälsomyndigheten</a>. The regional data has been curated from regional reports as found at <a href="https://www.coronakartan.se/">Corona Kartan</a>. While these two should be consistent with each other, there are discrepancies.  As best as I can tell, it's a result of FHM going through backlogs and cleaning them up. This means that, for historic data, the official (FHM) data will be more accurate, but for up-to-the-minute data, the regional data will be more accurate.</p>
+    <p> Also note, the values shown when hovering over the map are from FHM, and also aren't always consistent with the other two datasets. I'm just displaying them all.</p>
     <p class="helphead"><b>More info</b></p>
     <p>Github link <a href="https://github.com/nimishgautam/covid19sweden">here</a></p>
     <p>For questions/comments please email nimishg [at_sign] gmail&#8226;com</p>
@@ -40,14 +44,44 @@
 			<canvas id="canvas"></canvas>
 		</div>
 	</div>
+	<div class="select_holder">
+	  Showing data for:
+	<select id="current_region_select">
+	  <option>Sweden (official)</option>
+	  <option>Sweden (regional)</option>
+	  <option>Blekinge</option>
+	  <option>Dalarna</option>
+	  <option>Gotland</option>
+	  <option>Gävleborg</option>
+	  <option>Halland</option>
+	  <option>Jämtland</option>
+	  <option>Jönköping</option>
+	  <option>Kalmar</option>
+	  <option>Kronoberg</option>
+	  <option>Norrbotten</option>
+	  <option>Skåne</option>
+	  <option>Stockholm</option>
+	  <option>Södermanland</option>
+	  <option>Uppsala</option>
+	  <option>Värmland</option>
+	  <option>Västerbotten</option>
+	  <option>Västernorrland</option>
+	  <option>Västmanland</option>
+	  <option>Västra Götaland</option>
+	  <option>Örebro</option>
+	  <option>Östergötland</option>
+	</select>
+	<button id="infobtn">More info</button>
+	</div>
 </body>
 <footer>
-	<a href="#" id="infobtn">More info</a>	Sources: <a href="https://www.dataportal.se/sv/datasets?p=1&q=folkh%C3%A4lsomyndigheten&s=1&f=">FHM data</a> <a href="https://www.folkhalsomyndigheten.se/publicerat-material/publikationsarkiv/i/influenza-in-sweden/?pub=63511">Flu Report</a>
+  Sources: <a href="https://www.dataportal.se/sv/datasets?p=1&q=folkh%C3%A4lsomyndigheten&s=1&f=">FHM data</a> <a href="https://www.folkhalsomyndigheten.se/publicerat-material/publikationsarkiv/i/influenza-in-sweden/?pub=63511">Flu Report</a> <a href="https://www.coronakartan.se/tidslinje/">Regional data</a>
 </footer>
 <script>
 $('#helptext').hide();
 var toggleHelp = function(evt){
   if( $('#helptext').is(":hidden") ){
+    window.scrollTo(0,0);
     $('#helptext').slideDown("slow");
   }
   else{
@@ -61,5 +95,11 @@ $('#closehelp').click(toggleHelp);
 </script>
 <script src="./js/stats_chart_setup.js"></script>
 <script src="./js/d3map_setup.js"></script>
+<script>
+  $('#current_region_select').change(function(){
+    active_region = $('#current_region_select').val();
+    chart_update();
+  });
 
+</script>
 </html>
