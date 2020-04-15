@@ -19,6 +19,7 @@ d3.queue()
 	var countyName = d['Region'];
 	var countyVal = +d['Totalt_antal_avlidna'] / +d['Population'];
 	countyValues.set(countyName, countyVal);
+	countyPopData[countyName] = { 'pop': +d['Population'], 'deaths': +d['Totalt_antal_avlidna'] };
 	countyText.set(countyName, d['Totalt_antal_avlidna'] + " (pop:\xa0" + parseInt(d["Population"]).toLocaleString()+")");
 	  if(countyVal < countyMin){
 		  countyMin = countyVal;

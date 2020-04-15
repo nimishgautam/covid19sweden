@@ -1,4 +1,4 @@
-		
+		var countyPopData = {};	
 		var active_region = "Sweden (official)";
 		var chart_config = {
 			type: 'line',
@@ -7,7 +7,8 @@
 				datasets: []
 			},
 			options: {
-				annotation:{ //annotations set per chart
+				annotation:{
+					annotations:[]
 				},
 				responsive: true,
 				title: {
@@ -82,6 +83,7 @@
 					fill: false,
 				}
 				];
+			chart_config.options.annotation.annotations = [];
 
 			if (active_region == "Sweden (regional)" || active_region == "Sweden (official)"){
 				
@@ -103,24 +105,18 @@
 					fill: false,
 				});
 
-				chart_config.options.annotation = {
-					annotations:[
-						{
-							type: 'line',
-							mode: 'horizontal',
-							scaleID: 'y-axis-0',
-							value: 505,
-							borderColor: 'rgba(255,0,0,0.20)',
-							borderWidth: 2,
-							borderDash: [1, 3],
-							label: {
-								backgroundColor: "rgba(255,0,0,0.20)",
-								fontStyle: "normal",
-								enabled: true,
-								content: "Flu Deaths 2019",
-							}
-						
-						},
+				if(active_region == "Sweden (official)" && covid_data['Kumulativa_avlidna'].hasOwnProperty('(discrepancy)')){
+					chart_config.data.datasets.push({
+						label: 'Presumptive Deaths (today)',
+						backgroundColor: '#0000ff',
+						borderColor: '#0000ff',
+						data: covid_data["Kumulativa_avlidna"]["(discrepancy)"],
+						fill: false
+					});
+				
+				}
+
+				chart_config.options.annotation.annotations.push(
 						{
 							type: 'line',
 							mode: 'horizontal',
@@ -135,14 +131,45 @@
 								enabled: true,
 								content: "Flu Intensive Care 2019",
 							}
-						},
+				});
 
-					]
-				};
-
+				chart_config.options.annotation.annotations.push({
+							type: 'line',
+							mode: 'horizontal',
+							scaleID: 'y-axis-0',
+							value: 505, 
+							borderColor: 'rgba(255,0,0,0.20)',
+							borderWidth: 2,
+							borderDash: [1, 3],
+							label: {
+								backgroundColor: "rgba(255,0,0,0.20)",
+								fontStyle: "normal",
+								enabled: true,
+								content: "Flu Deaths 2019",
+							}
+						
+						});
 			}
-			else{
-				chart_config.options.annotation = {};
+			else {
+					chart_config.options.annotation.annotations.push({
+							type: 'line',
+							mode: 'horizontal',
+							scaleID: 'y-axis-0',
+							// 505 deaths in the year divided by sweden population
+							// not the best with hardcoded, but can refactor later if needed
+							value: 505 * countyPopData[ active_region ]['pop']/ 10327589 , 
+							borderColor: 'rgba(255,0,0,0.20)',
+							borderWidth: 2,
+							borderDash: [1, 3],
+							label: {
+								backgroundColor: "rgba(255,0,0,0.20)",
+								fontStyle: "normal",
+								enabled: true,
+								content: "Flu Deaths 2019",
+							}
+						
+						});
+
 			}
 			window.myLine.update();
 		};
