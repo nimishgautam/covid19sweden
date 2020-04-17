@@ -1,6 +1,7 @@
 #! /bin/sh
 wget https://ihmecovid19storage.blob.core.windows.net/latest/ihme-covid19.zip -O "../data/tmp/ihme-covid19.zip"
 cd ../data/tmp/
+unzip ihme-covid19.zip
 for D in `find . -type d`
 do
     mv $D/*.csv ../csv/
