@@ -55,9 +55,7 @@ def csv_to_JSON(csvfile, droprows=0):
         idx+=1
   return json_obj
 
-# python3 <filename> <csvfile> <outputfile>
-if __name__ == "__main__":
-  csvfile = sys.argv[1]
+def final_enriched_json(csvfile):
   # first 29 days arbitrarily dropped since they're low
   csv_obj = csv_to_JSON(csvfile, 31)
   final_json_obj = {}
@@ -71,6 +69,20 @@ if __name__ == "__main__":
   check_for_today(final_json_obj)
   add_more_data(final_json_obj)
   add_discrepancy_set(final_json_obj)
+  return final_json_obj
+
+  json_str = json.dumps( final_json_obj )
+  # Saves an async call if it's a valid JS file
+  js_file = "var covid_data = " + json_str + ";"
+  f = open(sys.argv[2], "w")
+  f.write(js_file)
+  f.close()
+
+# python3 <filename> <csvfile> <outputfile>
+if __name__ == "__main__":
+  
+  final_json_obj = final_enriched_json( sys.argv[1] )
+
   json_str = json.dumps( final_json_obj )
   # Saves an async call if it's a valid JS file
   js_file = "var covid_data = " + json_str + ";"

@@ -9,12 +9,25 @@ canvas {
 }
 
 .main_chart_holder {
-    width: 70%;
-    height: 90vh;
+    width: 67%;
+    z-index:10;
+    height: 80vh;
+}
+
+.project_button{
+    margin-top: 4rem;
+    margin-left: 0.5rem;
+    padding: 0.25rem;
+    cursor: pointer;
 }
 
 .sv_map_holder {
     width: 24%;
+    height: 80vh;
+}
+
+.project_button_holder {
+    width: 8%;
     height: 90vh;
 }
 
@@ -49,6 +62,14 @@ footer {
 #helptext p.helphead{
     text-align:center;
     font-size: 1.2rem;
+}
+
+.main_header{
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 button {

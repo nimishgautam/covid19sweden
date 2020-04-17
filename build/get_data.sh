@@ -6,3 +6,4 @@ wget https://free.entryscape.com/store/360/resource/4 -O "../data/csv/today_by_r
 wget https://raw.githubusercontent.com/elinlutz/gatsby-map/master/src/data/time_series/time_series_deaths-deaths.csv -O "../data/csv/time_series_deaths-deaths.csv"
 python3 fix_county_sheet.py
 python3 clean_data.py ../data/csv/region.csv ../data/js/covid-data.js
+python3 build_future_prediction_json.py
