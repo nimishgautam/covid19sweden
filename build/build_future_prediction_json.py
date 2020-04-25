@@ -8,7 +8,6 @@ output_js = "../data/js/covid-data.js"
 def get_full_prediction_series(daily_json):
   prediction_json = {}
   yesterday = daily_json['Statistikdatum'][-2]
-
   prediction_json[ 'dates' ] = daily_json['Statistikdatum'][:-1].copy()
 
   prediction_json['d_mean'] = daily_json['Antal_avlidna']['Sweden (official)'][:-1].copy()
@@ -32,12 +31,12 @@ def get_full_prediction_series(daily_json):
     t_upper = headers.index('"totdea_upper"')
 
     rows = rows[1:]
-    for row in rows[1:]:
+    for row in rows:
       entries = row.split(',')
-      country = entries[1].strip()
+      country = entries[0].strip()
       if country != '"Sweden"':
         continue
-      date = entries[2].strip()[6:11]
+      date = entries[1].strip()[6:11]
       if date <= yesterday:
         continue
       prediction_json['dates'].append(date)
