@@ -51,8 +51,13 @@ def add_more_data(input_obj):
       cumulative_data = []
       cumulative_total = 0
       for val in region_data:
-        cumulative_data.append( str( cumulative_total + int(val) ))
-        cumulative_total += int(val)
+        region_val = 0
+        try:
+          region_val = int(val)
+        except ValueError:
+          pass
+        cumulative_data.append( str( cumulative_total + region_val ))
+        cumulative_total += region_val
       input_obj['Kumulativa_avlidna'][region_name] = cumulative_data
       
       for i in range(0, len(sweden_cumulative)):
