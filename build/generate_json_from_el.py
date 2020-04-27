@@ -40,7 +40,12 @@ def add_more_data(input_obj):
       input_obj['Antal_avlidna'][region_name] = region_data
       
       for i in range(0, len(sweden_daily)):
-        swe_daily_int = int(region_data[i]) + int(sweden_daily[i])
+        region_val = 0
+        try:
+          region_val = int(region_data[i])
+        except ValueError:
+          pass
+        swe_daily_int = region_val + int(sweden_daily[i])
         sweden_daily[i] = str(swe_daily_int)
 
       cumulative_data = []
