@@ -30,13 +30,16 @@ def get_full_prediction_series(daily_json):
     t_lower = headers.index('"totdea_lower"')
     t_upper = headers.index('"totdea_upper"')
 
+    loc_idx = headers.index('"location_name"')
+    date_idx = headers.index('"date"')
+
     rows = rows[1:]
     for row in rows:
       entries = row.split(',')
-      country = entries[0].strip()
+      country = entries[loc_idx].strip()
       if country != '"Sweden"':
         continue
-      date = entries[1].strip()[6:11]
+      date = entries[date_idx].strip()[6:11]
       if date <= yesterday:
         continue
       prediction_json['dates'].append(date)
