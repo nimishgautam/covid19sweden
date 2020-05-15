@@ -40,7 +40,8 @@ def get_full_prediction_series(daily_json):
       if country != '"Sweden"':
         continue
       date = entries[date_idx].strip('"')[5:]
-      if date <= yesterday:
+      year = entries[date_idx].strip('"')[0:4]
+      if date <= yesterday or year < '2020':
         continue
       prediction_json['dates'].append(date)
       
